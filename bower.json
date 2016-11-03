@@ -1,0 +1,15 @@
+{
+  "name": "data-confirmation",
+  "version": "1.0.0",
+  "description": "\n    \n    \n    \n  ",
+  "main": "data-confirmation.html",
+  "keywords": [
+    "polymer",
+    "web-components"
+  ],
+  "dependencies": {
+    "erc-js-import": "marcus7777/erc-js-import#214e31af3a",
+    "dark-side": "marcus7777/dark-side#10cee98149",
+    "paper-input": "PolymerElements/paper-input#1d4798916a"
+  }
+}

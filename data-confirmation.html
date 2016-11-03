@@ -1,0 +1,65 @@
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../dark-side/dark-side.html">
+<link rel="import" href="../erc-js-import/erc-js-import.html">
+<!--
+  `<data-confirmation></data-confirmation>` Protecting data with data redundancy 
+  @demo demo.html
+-->
+<dom-module id="data-confirmation">
+  <template>
+    <template is="dom-if" if="[[play]]">
+      {{confirmedMsg}}
+    <br><template is="dom-repeat" items="{{code}}">
+        <paper-input label="[[getChr(item)]]" style="display:inline-block;width:39px" value="{{item}}" type=number min=1 max=255 ></paper-input>
+      </template>
+    </template>
+    
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "data-confirmation",
+    properties:{
+      rs:{
+        notify:true,
+        computed:"getRs(add)",
+      },
+      code:{
+        notify:true,
+        computed:"getCode(rs,msg)",
+        type:Array,
+      },
+      confirmedMsg:{
+        computed:"getConfirmedMsg(rs,code,code.*)",
+        notify:true,
+      },
+      add:{
+        value:16,
+      },
+      msg:String,
+      play:{
+        type:Boolean,
+        value:false,
+      },
+    },
+    getConfirmedMsg: function(rs,code){
+      try {
+        debugger
+        return rs.decode(code)
+      }
+      catch(err) {
+        return false
+      }
+      
+    },
+    getCode: function(rs,msg){
+      return rs.encode(msg)
+    },
+    getRs: function(add){
+      return new ReedSolomon(add)
+    },
+    getChr: function(a){
+      return String.fromCharCode(a)
+    },
+  })
+</script>
