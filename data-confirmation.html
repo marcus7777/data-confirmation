@@ -7,8 +7,9 @@
 <dom-module id="data-confirmation">
   <template>
     <template is="dom-if" if="[[play]]">
-      {{confirmedMsg}}
-        <br><template is="dom-repeat" items="{{code}}">
+      [[confirmedMsg]]
+      <br>
+      <template is="dom-repeat" items="{{code}}">
         <paper-input label="[[getChr(item)]]" style="display:inline-block;width:39px" value="{{item}}" type=number min=1 max=255 ></paper-input>
       </template>
     </template>
