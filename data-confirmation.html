@@ -1,5 +1,4 @@
 <link rel="import" href="../paper-input/paper-input.html">
-<link rel="import" href="../dark-side/dark-side.html">
 <link rel="import" href="../erc-js-import/erc-js-import.html">
 <!--
   `<data-confirmation></data-confirmation>` Protecting data with data redundancy 
@@ -9,11 +8,10 @@
   <template>
     <template is="dom-if" if="[[play]]">
       {{confirmedMsg}}
-    <br><template is="dom-repeat" items="{{code}}">
+        <br><template is="dom-repeat" items="{{code}}">
         <paper-input label="[[getChr(item)]]" style="display:inline-block;width:39px" value="{{item}}" type=number min=1 max=255 ></paper-input>
       </template>
     </template>
-    
   </template>
 </dom-module>
 <script>
@@ -33,6 +31,7 @@
         notify:true,
       },
       add:{
+        type: Number,
         value:16,
       },
       msg:String,
@@ -49,13 +48,12 @@
       catch(err) {
         return false
       }
-      
     },
     getCode: function(rs,msg){
       return rs.encode(msg)
     },
     getRs: function(add){
-      return new ReedSolomon(add)
+      return new ReedSolomon(+add)
     },
     getChr: function(a){
       return String.fromCharCode(a)
