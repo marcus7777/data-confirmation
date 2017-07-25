@@ -9,7 +9,7 @@
     <template is="dom-if" if="[[play]]">
       [[confirmedMsg]]
       <br>
-      <template is="dom-repeat" items="{{code}}">
+      <template is="dom-repeat" items="{{received}}">
         <paper-input label="[[getChr(item)]]" style="display:inline-block;width:39px" value="{{item}}" type=number min=1 max=255 ></paper-input>
       </template>
     </template>
@@ -22,13 +22,16 @@
       rs:{
         computed:"getRs(add)",
       },
-      code:{
+      send:{
         notify:true,
-        computed:"getCode(rs,msg)",
+        computed:"getCode(rs,msg,play)",
+        type:Array,
+      },
+      received:{
         type:Array,
       },
       confirmedMsg:{
-        computed:"getConfirmedMsg(rs,code,code.*)",
+        computed:"getConfirmedMsg(rs,received,received.*)",
         notify:true,
       },
       add:{
@@ -43,15 +46,18 @@
     },
     getConfirmedMsg: function(rs,code){
       try {
-        debugger
         return rs.decode(code)
       }
       catch(err) {
         return false
       }
     },
-    getCode: function(rs,msg){
-      return rs.encode(msg)
+    getCode: function(rs,msg,play){
+      var output = rs.encode(msg)
+      if (play) {
+        this.received = output
+      }
+      return output
     },
     getRs: function(add){
       return new ReedSolomon(+add)
